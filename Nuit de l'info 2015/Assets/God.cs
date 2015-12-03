@@ -42,5 +42,9 @@ using System;
         callback.Invoke();
     }
 
+    public void EndOfGame()
+    {
+        Debug.Log("Fin du Game");
+    }
 
 }
