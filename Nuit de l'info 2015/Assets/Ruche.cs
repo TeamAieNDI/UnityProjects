@@ -3,14 +3,25 @@ using System.Collections;
 
 public class Ruche : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	    
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    int _population;
+    public bool _estAuSol;
+
+    public enum Etat
+    {
+        None,
+        Pesticide,
+        Inondation,
+        Ouragan,
+        Canicule
+    }
+
+
+    void Awake()
+    {
+        _population = 100;
+
+
+
+    }
 
 }

@@ -12,6 +12,8 @@ public class DebutDuJeu : GameEvent
         var t = GameObject.Find("DayCounter").GetComponent<TimeCounter>();
         t.BeginCounter();
 
+        God.Get.Cata.Begin();
+
 
     }
 
