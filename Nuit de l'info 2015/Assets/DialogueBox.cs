@@ -11,8 +11,7 @@ public class DialogueBox : MonoBehaviour {
     int _indice;
     Func<bool> _callBack;
     bool _isActif;
-
-
+    
 	void Awake()
     {
         Debug.Log("Dialogue Awake");
@@ -27,8 +26,7 @@ public class DialogueBox : MonoBehaviour {
         _callBack = callback;
         Next();
     }
-
-
+    
     void ChangeDialogue(string dialogue)
     {
         _text.text = dialogue;

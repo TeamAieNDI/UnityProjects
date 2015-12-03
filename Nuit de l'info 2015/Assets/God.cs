@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class God : MonoBehaviour {
 
@@ -26,13 +27,19 @@ public class God : MonoBehaviour {
         Debug.Log("Lancement du Jeu");
         _dialogueBox = GameObject.Find("EspaceDialogue").GetComponent<DialogueBox>();
 
-        _dialogueBox.InitaliseNewDialogue(new List<string>() { "Hello", "World", ":)" }, () => { Debug.Log("Fin du texte"); return true; });
+        DialogueBoxSetActive(new List<string>() { "Hello", "World", ":)" }, () => { Debug.Log("Fin du texte"); return true; });
     }
 
-    public void DialogueBoxSetActive(bool actif)
+    public void DialogueBoxSetActive(List<string> textes, Func<bool> callback)
     {
-        _dialogueBox.gameObject.SetActive(actif);
+        _dialogueBox.InitaliseNewDialogue(textes, () => { EndOfDialogue(callback); return true; });
     }
 
+    void EndOfDialogue(Func<bool> callback)
+    {
+        Debug.Log("End Of Dialogue");
+        _dialogueBox.gameObject.SetActive(false);
+        callback.Invoke();
+    }
 	
 }
