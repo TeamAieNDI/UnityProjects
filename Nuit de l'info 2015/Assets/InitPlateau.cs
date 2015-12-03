@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InitPlateau : MonoBehaviour {
 
-    
-    void Start()
+    public class InitPlateau : MonoBehaviour
     {
-        God.Get.LancementDuJeu();
+        void Start()
+        {
+            God.Get.LancementDuJeu();
+
+        }
     }
-}

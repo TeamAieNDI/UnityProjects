@@ -3,43 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class God : MonoBehaviour {
-
-    DialogueBox _dialogueBox;
-    static God Me;
-    
-
-    public static God Get
+    public class God : MonoBehaviour
     {
-        get { return GameObject.Find("God").GetComponent<God>(); }
-    }
 
-    void Awake()
-    {
-        Me = this;
-        DontDestroyOnLoad(this);
-        Debug.Log("God Manager");
-    }
+        DialogueBox _dialogueBox;
+        static God Me;
 
 
-    public void LancementDuJeu()
-    {
-        Debug.Log("Lancement du Jeu");
-        _dialogueBox = GameObject.Find("EspaceDialogue").GetComponent<DialogueBox>();
+        public static God Get
+        {
+            get { return GameObject.Find("God").GetComponent<God>(); }
+        }
 
-        DialogueBoxSetActive(new List<string>() { "Hello", "World", ":)" }, () => { Debug.Log("Fin du texte"); return true; });
+        void Awake()
+        {
+            Me = this;
+            DontDestroyOnLoad(this);
+        }
+
+        public void LancementDuJeu()
+        {
+            _dialogueBox = GameObject.Find("EspaceDialogue").GetComponent<DialogueBox>();
+
+            this.gameObject.AddComponent<GameEventManager>().Go();
+
     }
 
     public void DialogueBoxSetActive(List<string> textes, Func<bool> callback)
-    {
-        _dialogueBox.InitaliseNewDialogue(textes, () => { EndOfDialogue(callback); return true; });
-    }
+        {
+            _dialogueBox.gameObject.SetActive(true);
+            _dialogueBox.InitaliseNewDialogue(textes, () => { EndOfDialogue(callback); return true; });
+        }
+
 
     void EndOfDialogue(Func<bool> callback)
     {
-        Debug.Log("End Of Dialogue");
         _dialogueBox.gameObject.SetActive(false);
         callback.Invoke();
     }
-	
+
+
 }

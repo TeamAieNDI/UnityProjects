@@ -14,7 +14,6 @@ public class DialogueBox : MonoBehaviour {
     
 	void Awake()
     {
-        Debug.Log("Dialogue Awake");
         _text = GetComponentInChildren<Text>();
     }
 
