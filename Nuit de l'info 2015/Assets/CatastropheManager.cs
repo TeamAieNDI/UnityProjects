@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class CatastropheManager : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class CatastropheManager : MonoBehaviour {
         isActif = false;
         var Objruches = GameObject.FindGameObjectsWithTag("Ruche");
         _ruches = new List<Ruche>();
+
         foreach( var ruche in Objruches)
         {
             _ruches.Add(ruche.GetComponent<Ruche>());
@@ -24,13 +26,16 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
+        DeclencheInondation();
         isActif = true;
+        
         // Génère un nouveau nextCata
         NewCata();
     }
 
     public void Update()
     {
+        /*
         if (!isActif) return;
         
         if(nextCata == 0)
@@ -46,9 +51,10 @@ public class CatastropheManager : MonoBehaviour {
         {
             nextCata--;
         }
-        
+        */
     }
 
+    
     void NewCata()
     {
         nextCata = (int)((Random.value)*100);
@@ -63,7 +69,12 @@ public class CatastropheManager : MonoBehaviour {
     // Touche que sol
     void DeclencheInondation()
     {
-
+        Debug.Log("Inondation");
+        var t = _ruches.Where( (r) => r.EstAuSol);
+        foreach(var ruche in t)
+        {
+            ruche.SetState(Ruche.Etat.Inondation);
+        }
     }
 
     // Touche que au dessus
