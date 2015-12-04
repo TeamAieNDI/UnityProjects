@@ -31,8 +31,6 @@ using System;
             _dialogueBox = GameObject.Find("EspaceDialogue").GetComponent<DialogueBox>();
             _catastropheManager = this.gameObject.AddComponent(typeof(CatastropheManager)) as CatastropheManager;
             
-            
-
             this.gameObject.AddComponent<GameEventManager>().Go();
 
     }
@@ -42,8 +40,7 @@ using System;
             _dialogueBox.gameObject.SetActive(true);
             _dialogueBox.InitaliseNewDialogue(textes, () => { EndOfDialogue(callback); return true; });
         }
-
-
+    
         public void EndOfDialogue(Func<bool> callback)
         {
             _dialogueBox.gameObject.SetActive(false);
@@ -53,6 +50,12 @@ using System;
         public void EndOfGame()
         {
             Debug.Log("Fin du Game");
+        }
+        
+        public void RecupDialogue()
+        {
+            _dialogueBox = GameObject.Find("EspaceDialogue").GetComponent<DialogueBox>();
+
         }
 
 }

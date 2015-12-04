@@ -25,7 +25,7 @@ public class TimeCounter : MonoBehaviour {
     {
         if (_tempsRestants == 1)
         {
-            God.Get.EndOfGame();
+            Application.LoadLevel("HappyEnd");
             return;
         }
 

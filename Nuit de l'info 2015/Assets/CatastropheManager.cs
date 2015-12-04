@@ -39,35 +39,52 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
-        DeclencheInondation();
+        DeclencheNouvelCatatrophe();
         isActif = true;
         
         // Génère un nouveau nextCata
         NewCata();
     }
 
-    public void Update()
+    public void DeclencheNouvelCatatrophe()
     {
-        /*
-        if (!isActif) return;
-        
-        if(nextCata == 0)
+        var aSupprimer = new List<Ruche>();
+        foreach(var ruche in _ruches)
         {
-            // Crée une catastrophe
-
-
-            // Génère un nouveau nextCata
-            NewCata();
-
+            if (ruche._population == 0)
+                aSupprimer.Add(ruche);
         }
-        else
+
+        foreach(var ruche in aSupprimer)
         {
-            nextCata--;
+            _ruches.Remove(ruche);
         }
-        */
+        if (_ruches.Count == 0)
+        {
+            Application.LoadLevel("BadEnd");
+            return;
+        }
+                
+
+        switch(MyRandom.Next(1, 5))
+        {
+            case 1:
+                DeclencheInondation();
+                break;
+            case 2:
+                DeclencheOuragan();
+                break;
+            case 3:
+                DeclencheCanicule();
+                break;
+            case 4:
+                DeclenchePesticides();
+                break;
+        }
+
     }
 
-    
+
     void NewCata()
     {
         nextCata = (int)((Random.value)*100);
@@ -91,6 +108,8 @@ public class CatastropheManager : MonoBehaviour {
         ActualInPesticide.SetState(Ruche.Etat.None);
         ActualInPesticide.ReturnToNormalColor();
         ActualInPesticide = null;
+        DeclencheNouvelCatatrophe();
+
     }
 
     // Touche que sol
@@ -115,6 +134,7 @@ public class CatastropheManager : MonoBehaviour {
         {
             ruche.SetState(Ruche.Etat.None);
         }
+        DeclencheNouvelCatatrophe();
 
     }
 
@@ -140,6 +160,7 @@ public class CatastropheManager : MonoBehaviour {
             ruche.RemetPosition();
             ruche.SetState(Ruche.Etat.None);
         }
+        DeclencheNouvelCatatrophe();
 
     }
 
@@ -160,6 +181,8 @@ public class CatastropheManager : MonoBehaviour {
         ActualInCanicule.SetState(Ruche.Etat.None);
         ActualInCanicule.ReturnToNormalColor();
         ActualInCanicule = null;
+        DeclencheNouvelCatatrophe();
+
     }
 
 }

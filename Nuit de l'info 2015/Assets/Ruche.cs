@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Ruche : MonoBehaviour {
 
-    int _population;
+    public int _population;
     public bool EstAuSol;
     Image _image;
     Etat _state;
