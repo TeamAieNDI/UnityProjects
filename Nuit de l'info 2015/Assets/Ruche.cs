@@ -13,10 +13,12 @@ public class Ruche : MonoBehaviour {
     Button _button;
     Secours[] _secours;
     bool devoileMenu;
+    Transform _initialePosition;
 
     Sprite rucheNormal;
     Sprite rucheInonde;
     Sprite rucheInondeSafe;
+    Sprite rucheOuraganSafe;
 
     bool IsDead
     {
@@ -50,6 +52,7 @@ public class Ruche : MonoBehaviour {
 
     void Awake()
     {
+        _initialePosition = this.transform;
         _button = GetComponent<Button>();
         devoileMenu = true;
 
@@ -69,6 +72,7 @@ public class Ruche : MonoBehaviour {
         rucheInonde = Resources.Load<Sprite>("IMG/RucheInonde");
         rucheInondeSafe = Resources.Load<Sprite>("IMG/RucheInondeSafe");
         rucheNormal = Resources.Load<Sprite>("IMG/RucheNormal");
+        rucheOuraganSafe = Resources.Load<Sprite>("IMG/RucheOuraganSafe");
 
     }
 
@@ -94,8 +98,6 @@ public class Ruche : MonoBehaviour {
         }
     }
 
-    
-
     public void SetSprite(Sprite sprite)
     {
         _image.sprite = sprite;
@@ -119,10 +121,28 @@ public class Ruche : MonoBehaviour {
             case Etat.None:
                 return;
                 break;
+
             case Etat.Inondation:
                 PopLower();
                 break;
+
+            case Etat.Ouragan:
+                Tremble();
+                PopLower();
+                break;
         }
+    }
+
+    void Tremble()
+    {
+        var signe = Random.value;
+        
+        Vector3 direction = new Vector3(Random.value, Random.value);
+
+        if (signe > 0.5) direction *= -1;
+
+        this.transform.Translate(direction);
+
     }
 
     void PopLower()
@@ -144,6 +164,7 @@ public class Ruche : MonoBehaviour {
     {
 
     }
+
     public void SoigneInondation()
     {
         if(_state == Etat.Inondation)
@@ -155,7 +176,12 @@ public class Ruche : MonoBehaviour {
 
     public void SoigneOuragan()
     {
-
+        if(_state == Etat.Ouragan)
+        {
+            RemetPosition();
+            SetState(Etat.None);
+            _image.sprite = rucheOuraganSafe;
+        }
     }
 
     public void SoigneCanicule()
@@ -163,5 +189,9 @@ public class Ruche : MonoBehaviour {
 
     }
 
+    public void RemetPosition()
+    {
+        this.transform.position = _initialePosition.position;
+    }
 
 }

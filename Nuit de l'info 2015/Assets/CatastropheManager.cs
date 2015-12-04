@@ -36,7 +36,7 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
-        DeclencheInondation();
+        DeclencheOuragan();
         isActif = true;
         
         // Génère un nouveau nextCata
@@ -104,6 +104,25 @@ public class CatastropheManager : MonoBehaviour {
     // Touche que au dessus
     void DeclencheOuragan()
     {
+
+        var t = _ruches.Where((r) => !r.EstAuSol);
+        foreach (var ruche in t)
+        {
+            ruche.SetState(Ruche.Etat.Ouragan);
+        }
+
+        Invoke("StopOuragan", 3f);
+    }
+
+    void StopOuragan()
+    {
+        FondDecranActuel.sprite = FondNormal;
+        var t = _ruches.Where((r) => !r.EstAuSol);
+        foreach (var ruche in t)
+        {
+            ruche.RemetPosition();
+            ruche.SetState(Ruche.Etat.None);
+        }
 
     }
 
