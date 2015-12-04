@@ -59,6 +59,7 @@ public class Secours : MonoBehaviour {
                 _ruche.SoignePesticide();
                 break;
         }
+        _ruche.DevoileMenu();
     }
 
 }

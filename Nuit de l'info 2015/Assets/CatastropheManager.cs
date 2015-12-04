@@ -79,13 +79,24 @@ public class CatastropheManager : MonoBehaviour {
     // Touche que sol
     void DeclencheInondation()
     {
-
         FondDecranActuel.sprite = FondInonde;
 
         var t = _ruches.Where( (r) => r.EstAuSol);
         foreach(var ruche in t)
         {
             ruche.SetState(Ruche.Etat.Inondation);
+        }
+
+        Invoke("StopInondation", 3f);
+    }
+
+    void StopInondation()
+    {
+        FondDecranActuel.sprite = FondNormal;
+        var t = _ruches.Where((r) => r.EstAuSol);
+        foreach (var ruche in t)
+        {
+            ruche.SetState(Ruche.Etat.None);
         }
 
     }

@@ -14,6 +14,10 @@ public class Ruche : MonoBehaviour {
     Secours[] _secours;
     bool devoileMenu;
 
+    Sprite rucheNormal;
+    Sprite rucheInonde;
+    Sprite rucheInondeSafe;
+
     bool IsDead
     {
         get
@@ -22,7 +26,7 @@ public class Ruche : MonoBehaviour {
         }
     }
 
-    void DevoileMenu()
+    public void DevoileMenu()
     {
         if(devoileMenu)
         {
@@ -63,6 +67,7 @@ public class Ruche : MonoBehaviour {
         _text = GetComponentInChildren<Text>();
 
         rucheInonde = Resources.Load<Sprite>("IMG/RucheInonde");
+        rucheInondeSafe = Resources.Load<Sprite>("IMG/RucheInondeSafe");
         rucheNormal = Resources.Load<Sprite>("IMG/RucheNormal");
 
     }
@@ -89,8 +94,7 @@ public class Ruche : MonoBehaviour {
         }
     }
 
-    Sprite rucheNormal;
-    Sprite rucheInonde;
+    
 
     public void SetSprite(Sprite sprite)
     {
@@ -145,6 +149,7 @@ public class Ruche : MonoBehaviour {
         if(_state == Etat.Inondation)
         {
             SetState(Etat.None);
+            _image.sprite = rucheInondeSafe;
         }
     }
 
