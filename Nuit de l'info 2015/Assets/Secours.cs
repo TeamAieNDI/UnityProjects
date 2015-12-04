@@ -12,7 +12,8 @@ public class Secours : MonoBehaviour {
         Pesticide,
         Inondation,
         Ouragan,
-        Canicule
+        Canicule,
+        Close
     }
 
 	void Awake()

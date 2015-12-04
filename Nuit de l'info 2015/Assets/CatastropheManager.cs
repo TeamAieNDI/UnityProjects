@@ -39,7 +39,7 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
-        DeclencheCanicule();
+        DeclenchePesticides();
         isActif = true;
         
         // Génère un nouveau nextCata
@@ -73,10 +73,24 @@ public class CatastropheManager : MonoBehaviour {
         nextCata = (int)((Random.value)*100);
     }
 
+    Ruche ActualInPesticide;
+
     // Touche une zone
     void DeclenchePesticides()
     {
+        var indice = MyRandom.Next(0, _ruches.Count);
+        _ruches[indice].SetState(Ruche.Etat.Pesticide);
 
+        ActualInPesticide = _ruches[indice];
+
+        Invoke("StopPesticide", 5f);
+    }
+
+    void StopPesticide()
+    {
+        ActualInPesticide.SetState(Ruche.Etat.None);
+        ActualInPesticide.ReturnToNormalColor();
+        ActualInPesticide = null;
     }
 
     // Touche que sol

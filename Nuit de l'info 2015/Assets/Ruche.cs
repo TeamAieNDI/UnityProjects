@@ -105,12 +105,20 @@ public class Ruche : MonoBehaviour {
             case Etat.Canicule:
                 AnimRed();
                 break;
+            case Etat.Pesticide:
+                AnimGreen();
+                break;
         }
     }
 
     void AnimRed()
     {
         _image.CrossFadeColor(new Color(1, 0, 0), 1f, false, false);
+    }
+
+    void AnimGreen()
+    {
+        _image.CrossFadeColor(new Color(0, 1, 0), 1f, false, false);
     }
 
     public void ReturnToNormalColor()
@@ -153,6 +161,9 @@ public class Ruche : MonoBehaviour {
             case Etat.Canicule:
                 PopLower();
                 break;
+            case Etat.Pesticide:
+                PopLower();
+                break;
         }
     }
 
@@ -185,7 +196,11 @@ public class Ruche : MonoBehaviour {
 
     public void SoignePesticide()
     {
-
+        if (_state == Etat.Pesticide)
+        {
+            ReturnToNormalColor();
+            SetState(Etat.None);
+        }
     }
 
     public void SoigneInondation()
