@@ -39,7 +39,7 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
-        DeclenchePesticides();
+        DeclencheInondation();
         isActif = true;
         
         // Génère un nouveau nextCata
