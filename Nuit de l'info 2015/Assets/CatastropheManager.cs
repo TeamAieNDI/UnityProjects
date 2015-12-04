@@ -10,8 +10,18 @@ public class CatastropheManager : MonoBehaviour {
     bool isActif;
     int nextCata;
 
+    Image FondDecranActuel;
+
+    Sprite FondNormal;
+    Sprite FondInonde;
+
     void Awake()
     {
+        FondNormal = Resources.Load<Sprite>("IMG/FondNormal");
+        FondInonde = Resources.Load<Sprite>("IMG/FondInonde");
+
+        FondDecranActuel = GameObject.Find("Fond du jeu").GetComponent<Image>();
+
         isActif = false;
         var Objruches = GameObject.FindGameObjectsWithTag("Ruche");
         _ruches = new List<Ruche>();
@@ -69,12 +79,15 @@ public class CatastropheManager : MonoBehaviour {
     // Touche que sol
     void DeclencheInondation()
     {
-        Debug.Log("Inondation");
+
+        FondDecranActuel.sprite = FondInonde;
+
         var t = _ruches.Where( (r) => r.EstAuSol);
         foreach(var ruche in t)
         {
             ruche.SetState(Ruche.Etat.Inondation);
         }
+
     }
 
     // Touche que au dessus

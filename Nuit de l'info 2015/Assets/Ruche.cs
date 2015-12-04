@@ -91,6 +91,7 @@ public class Ruche : MonoBehaviour {
 
     Sprite rucheNormal;
     Sprite rucheInonde;
+
     public void SetSprite(Sprite sprite)
     {
         _image.sprite = sprite;
