@@ -15,8 +15,11 @@ public class CatastropheManager : MonoBehaviour {
     Sprite FondNormal;
     Sprite FondInonde;
 
+    System.Random MyRandom;
+
     void Awake()
     {
+        MyRandom = new System.Random();
         FondNormal = Resources.Load<Sprite>("IMG/FondNormal");
         FondInonde = Resources.Load<Sprite>("IMG/FondInonde");
 
@@ -36,7 +39,7 @@ public class CatastropheManager : MonoBehaviour {
     // Commence à balancer des catastrophes
     public void Begin()
     {
-        DeclencheOuragan();
+        DeclencheCanicule();
         isActif = true;
         
         // Génère un nouveau nextCata
@@ -126,10 +129,23 @@ public class CatastropheManager : MonoBehaviour {
 
     }
 
+    Ruche ActualInCanicule;
+
     // Touche une zone
     void DeclencheCanicule()
     {
+        var indice = MyRandom.Next(0, _ruches.Count);
+        _ruches[indice].SetState(Ruche.Etat.Canicule);
 
+        ActualInCanicule = _ruches[indice];
+
+        Invoke("StopCanicule", 5f);
+    }
+    void StopCanicule()
+    {
+        ActualInCanicule.SetState(Ruche.Etat.None);
+        ActualInCanicule.ReturnToNormalColor();
+        ActualInCanicule = null;
     }
 
 }

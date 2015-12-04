@@ -20,6 +20,8 @@ public class Ruche : MonoBehaviour {
     Sprite rucheInondeSafe;
     Sprite rucheOuraganSafe;
 
+    NuiageDePluie nuage;
+
     bool IsDead
     {
         get
@@ -52,6 +54,8 @@ public class Ruche : MonoBehaviour {
 
     void Awake()
     {
+        
+
         _initialePosition = this.transform;
         _button = GetComponent<Button>();
         devoileMenu = true;
@@ -78,7 +82,10 @@ public class Ruche : MonoBehaviour {
 
     void Start()
     {
-        foreach(var secour in _secours)
+        nuage = GetComponentInChildren<NuiageDePluie>();
+        nuage.gameObject.SetActive(false);
+
+        foreach (var secour in _secours)
         {
             secour.gameObject.SetActive(false);
         }
@@ -95,7 +102,20 @@ public class Ruche : MonoBehaviour {
             case Etat.Inondation:
                 _image.sprite = rucheInonde;
                 break;
+            case Etat.Canicule:
+                AnimRed();
+                break;
         }
+    }
+
+    void AnimRed()
+    {
+        _image.CrossFadeColor(new Color(1, 0, 0), 1f, false, false);
+    }
+
+    public void ReturnToNormalColor()
+    {
+        _image.CrossFadeColor(new Color(1, 1, 1), 0.5f, false, false);
     }
 
     public void SetSprite(Sprite sprite)
@@ -128,6 +148,9 @@ public class Ruche : MonoBehaviour {
 
             case Etat.Ouragan:
                 Tremble();
+                PopLower();
+                break;
+            case Etat.Canicule:
                 PopLower();
                 break;
         }
@@ -186,7 +209,23 @@ public class Ruche : MonoBehaviour {
 
     public void SoigneCanicule()
     {
+        if(_state == Etat.Canicule)
+        {
+            ReturnToNormalColor();
+            SetState(Etat.None);
+            NuageOTD();
+        }
+    }
 
+    void NuageOTD()
+    {
+        nuage.gameObject.SetActive(true);
+        Invoke("FermeTaGueuleNuage", 1f);
+    }
+
+    void FermeTaGueuleNuage()
+    {
+        nuage.gameObject.SetActive(false);
     }
 
     public void RemetPosition()
